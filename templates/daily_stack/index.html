@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<h1> {{ user.username }}'s Stack:</h1>
+
+ {% for s in stack %}
+
+ <a href="{% url 'daily_stack:assignment' s.id %}">
+ <p>{{ s.name }}</p>
+ </a>
+
+
+ {% endfor %}
+
+ <h2> Add a new assignment: </h2>
+
+ <form action "{% url 'daily_stack:index' %}" method="post">
+     {% csrf_token %}
+     {{ form }}
+
+     <button id="submit-button" type="submit" class="btn btn-primary">Submit</button>
+
+ </form>
+
+
+
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}

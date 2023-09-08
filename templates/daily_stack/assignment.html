@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<h1> {{ assignment.name }}</h1>
+
+ <p>{{ assignment.due_date }}</p>
+ <p>{{ assignment.difficulty }}</p>
+
+
+ <h2> Remove assignment? </h2>
+
+ <form action "{% url 'daily_stack:assignment' assignment.id %}" method="post">
+     {% csrf_token %}
+
+     <button id="submit-button" name="remove_btn" type="submit" class="btn btn-primary">Remove Assignment</button>
+
+ </form>
+
+
+
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
